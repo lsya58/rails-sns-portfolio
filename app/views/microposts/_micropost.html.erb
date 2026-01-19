@@ -1,8 +1,9 @@
-<li>
+<div class="micropost">
   <%= link_to micropost.user.name, micropost.user %>
   <span><%= micropost.content %></span>
-  <span><%= time_ago_in_words(micropost.created_at) %>前</span>
+  <br>
+  <small><%= time_ago_in_words(micropost.created_at) %>前</small>
   <% if current_user?(micropost.user) %>
-    <%= link_to "削除", micropost, data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+    <%= link_to "削除", micropost, data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, style: "color: #f4212e; margin-left: 10px;" %>
   <% end %>
-</li>
+</div>
