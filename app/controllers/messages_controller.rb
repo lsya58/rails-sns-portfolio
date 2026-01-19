@@ -7,7 +7,11 @@ class MessagesController < ApplicationController
     @message.user = current_user
 
     if @message.save
-      redirect_to @room
+      RoomChannel.broadcast_to(@room, {
+        message: render_to_string(partial: 'messages/message', locals: { message: @message }),
+        user_id: current_user.id
+      })
+      head :ok
     else
       render 'rooms/show', status: :unprocessable_entity
     end

@@ -3,19 +3,12 @@
   <%= other_user.name %> とのメッセージ
 </h1>
 
-<div id="messages">
-  <% @messages.each do |message| %>
-    <div>
-      <strong><%= message.user.name %>:</strong>
-      <%= message.content %>
-      <small><%= time_ago_in_words(message.created_at) %>前</small>
-    </div>
-  <% end %>
+<div id="messages" data-room-id="<%= @room.id %>">
+  <%= render @messages %>
 </div>
 
-<%= form_with(model: [@room, @message]) do |f| %>
-  <%= f.text_area :content, placeholder: "メッセージを入力...", rows: 3 %>
-  <%= hidden_field_tag :room_id, @room.id %>
+<%= form_with(model: [@room, @message], id: "message-form") do |f| %>
+  <%= f.text_area :content, placeholder: "メッセージを入力...", rows: 3, id: "message-content" %>
   <%= f.submit "送信", class: "btn btn-primary" %>
 <% end %>
 
