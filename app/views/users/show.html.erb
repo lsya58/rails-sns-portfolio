@@ -8,6 +8,13 @@
 
 <%= render 'follow_form' if logged_in? %>
 
+<% unless current_user?(@user) %>
+  <%= form_with(url: rooms_path, method: :post) do |f| %>
+    <%= hidden_field_tag :user_id, @user.id %>
+    <%= f.submit "メッセージを送る", class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
 <h3>投稿 (<%= @user.microposts.count %>)</h3>
 <% if @microposts.any? %>
   <ol>
