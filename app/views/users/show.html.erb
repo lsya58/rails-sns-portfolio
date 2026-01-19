@@ -1,2 +1,17 @@
 <h1><%= @user.name %></h1>
 <p>Email: <%= @user.email %></p>
+
+<div>
+  <%= link_to "#{@user.following.count} フォロー中", following_user_path(@user) %>
+  <%= link_to "#{@user.followers.count} フォロワー", followers_user_path(@user) %>
+</div>
+
+<%= render 'follow_form' if logged_in? %>
+
+<h3>投稿 (<%= @user.microposts.count %>)</h3>
+<% if @microposts.any? %>
+  <ol>
+    <%= render @microposts %>
+  </ol>
+  <%= will_paginate @microposts %>
+<% end %>
