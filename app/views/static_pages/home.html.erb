@@ -1,0 +1,21 @@
+<% if logged_in? %>
+  <div class="row">
+    <aside>
+      <section>
+        <%= form_with(model: @micropost) do |f| %>
+          <%= render 'shared/error_messages', object: @micropost %>
+          <%= f.text_area :content, placeholder: "いまなにしてる？" %>
+          <%= f.submit "投稿", class: "btn btn-primary" %>
+        <% end %>
+      </section>
+    </aside>
+    <div>
+      <h3>タイムライン</h3>
+      <%= render @feed_items %>
+      <%= will_paginate @feed_items %>
+    </div>
+  </div>
+<% else %>
+  <h1>ようこそ</h1>
+  <%= link_to "新規登録", signup_path, class: "btn btn-lg btn-primary" %>
+<% end %>

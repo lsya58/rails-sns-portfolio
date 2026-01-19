@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_13_103454) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_19_083832) do
+  create_table "microposts", force: :cascade do |t|
+    t.text "content"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_microposts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -19,4 +27,5 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_13_103454) do
     t.string "password_digest"
   end
 
+  add_foreign_key "microposts", "users"
 end
