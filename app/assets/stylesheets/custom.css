@@ -207,3 +207,60 @@ li {
 #follow_form {
   margin: 15px 0;
 }
+
+/* プロフィール画像 */
+.gravatar {
+  border-radius: 50%;
+  border: 2px solid #2f3336;
+}
+
+.gravatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #2f3336;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* メッセージ一覧 */
+.room-list {
+  list-style: none;
+  padding: 0;
+}
+
+.room-item {
+  background-color: #192734;
+  border: 1px solid #2f3336;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.room-item:hover {
+  background-color: #1c2938;
+}
+
+.room-item a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #e7e9ea;
+  width: 100%;
+}
+
+/* プロフィール画像 */
+.gravatar {
+  border-radius: 50%;
+  border: 2px solid #2f3336;
+  object-fit: cover;
+}
+
+/* ユーザー詳細ページのアバター */
+.user-info .gravatar {
+  width: 100px;
+  height: 100px;
+}

@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
+
   def index
     @users = User.all
   end
@@ -21,6 +24,20 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.paginate(page: params[:page], per_page: 10)
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params_for_update)
+      flash[:success] = "プロフィールを更新しました"
+      redirect_to @user
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def following
     @title = "Following"
     @user = User.find(params[:id])
@@ -39,5 +56,14 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def user_params_for_update
+    params.require(:user).permit(:name, :email, :avatar)
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
   end
 end

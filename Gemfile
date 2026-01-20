@@ -72,3 +72,4 @@ end
 
 gem 'will_paginate', '~> 3.3'
 gem 'bootstrap-will_paginate', '~> 1.0'
+gem 'image_processing', '~> 1.2'

@@ -1,24 +1,29 @@
-<h1><%= @user.name %></h1>
-<p>Email: <%= @user.email %></p>
+<div class="container">
+  <div class="user-info">
+    <%= gravatar_for @user, size: 100 %>
+    <h1><%= @user.name %></h1>
+    <p>Email: <%= @user.email %></p>
 
-<div>
-  <%= link_to "#{@user.following.count} フォロー中", following_user_path(@user) %>
-  <%= link_to "#{@user.followers.count} フォロワー", followers_user_path(@user) %>
-</div>
+    <div class="user-stats">
+      <%= link_to "#{@user.following.count} フォロー中", following_user_path(@user) %>
+      <%= link_to "#{@user.followers.count} フォロワー", followers_user_path(@user) %>
+    </div>
 
-<%= render 'follow_form' if logged_in? %>
+    <%= render 'follow_form' if logged_in? %>
 
-<% unless current_user?(@user) %>
-  <%= form_with(url: rooms_path, method: :post) do |f| %>
-    <%= hidden_field_tag :user_id, @user.id %>
-    <%= f.submit "メッセージを送る", class: "btn btn-primary" %>
+    <% unless current_user?(@user) %>
+      <%= form_with(url: rooms_path, method: :post) do |f| %>
+        <%= hidden_field_tag :user_id, @user.id %>
+        <%= f.submit "メッセージを送る", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <h3>投稿 (<%= @user.microposts.count %>)</h3>
+  <% if @microposts.any? %>
+    <div class="feed">
+      <%= render @microposts %>
+    </div>
+    <%= will_paginate @microposts %>
   <% end %>
-<% end %>
-
-<h3>投稿 (<%= @user.microposts.count %>)</h3>
-<% if @microposts.any? %>
-  <ol>
-    <%= render @microposts %>
-  </ol>
-  <%= will_paginate @microposts %>
-<% end %>
+</div>

@@ -1,14 +1,19 @@
-<h1>メッセージ一覧</h1>
+<div class="container">
+  <h1>メッセージ一覧</h1>
 
-<% if @rooms.any? %>
-  <ul>
-    <% @rooms.each do |room| %>
-      <li>
-        <% other_user = room.users.where.not(id: current_user.id).first %>
-        <%= link_to other_user.name, room %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>まだメッセージがありません</p>
-<% end %>
+  <% if @rooms.any? %>
+    <ul class="room-list">
+      <% @rooms.each do |room| %>
+        <li class="room-item">
+          <% other_user = room.users.where.not(id: current_user.id).first %>
+          <%= link_to room do %>
+            <%= gravatar_for(other_user, size: 50) %>
+            <span><%= other_user.name %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>まだメッセージがありません</p>
+  <% end %>
+</div>

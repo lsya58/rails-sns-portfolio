@@ -1,6 +1,13 @@
 <div class="micropost">
   <%= link_to micropost.user.name, micropost.user %>
   <span><%= micropost.content %></span>
+  
+  <% if micropost.image.attached? %>
+    <div style="margin-top: 10px;">
+      <%= image_tag micropost.image.variant(resize_to_limit: [500, 500]), style: "max-width: 100%; border-radius: 8px;" %>
+    </div>
+  <% end %>
+  
   <br>
   <small><%= time_ago_in_words(micropost.created_at) %>前</small>
   <% if current_user?(micropost.user) %>
