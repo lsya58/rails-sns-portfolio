@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :rooms, only: [:index, :show, :create] do
     resources :messages, only: [:create]
   end
+  resources :password_resets, only: [:new, :create, :edit, :update]
+  
   get    "/signup",  to: "users#new"
   get    "/login",   to: "sessions#new"
   post   "/login",   to: "sessions#create"
