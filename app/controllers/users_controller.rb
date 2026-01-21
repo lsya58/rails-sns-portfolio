@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -30,12 +30,35 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params_for_update)
-      flash[:success] = "プロフィールを更新しました"
-      redirect_to @user
+    
+    if params[:user][:current_password].present?
+      if @user.authenticate(params[:user][:current_password])
+        if @user.update(password: params[:user][:password], 
+                       password_confirmation: params[:user][:password_confirmation])
+          flash[:success] = "パスワードを変更しました"
+          redirect_to settings_path
+        else
+          render 'static_pages/settings', status: :unprocessable_entity
+        end
+      else
+        @user.errors.add(:current_password, "が正しくありません")
+        render 'static_pages/settings', status: :unprocessable_entity
+      end
     else
-      render :edit, status: :unprocessable_entity
+      if @user.update(user_params_for_update)
+        flash[:success] = "プロフィールを更新しました"
+        redirect_to @user
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:success] = "アカウントを削除しました"
+    redirect_to root_url
   end
 
   def following

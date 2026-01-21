@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root "static_pages#home"
+  get "/settings", to: "static_pages#settings"
+  
   resources :users do
     member do
       get :following, :followers
