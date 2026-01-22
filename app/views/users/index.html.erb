@@ -1,9 +1,17 @@
-<h1>ユーザー一覧</h1>
+<div class="container">
+  <h1>ユーザー一覧</h1>
 
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.name, user %>
-    </li>
-  <% end %>
-</ul>
+  <div class="users-list">
+    <% @users.each do |user| %>
+      <div class="user-item">
+        <%= link_to user do %>
+          <%= gravatar_for(user, size: 48) %>
+          <div class="user-item-info">
+            <span class="user-item-name"><%= user.name %></span>
+            <span class="user-item-email"><%= user.email %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
