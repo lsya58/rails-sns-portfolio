@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "static_pages#home"
   get "/settings", to: "static_pages#settings"
+  get "/portfolio", to: "static_pages#portfolio"
   
   resources :users do
     member do

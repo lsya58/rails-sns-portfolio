@@ -12,6 +12,9 @@ class StaticPagesController < ApplicationController
     @user = current_user
   end
 
+  def portfolio  
+  end
+
   private
 
   def logged_in_user
